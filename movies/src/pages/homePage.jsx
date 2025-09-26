@@ -27,10 +27,12 @@ const HomePage = (props) => {
         <Header title={"Home Page"} />
       </Grid>
       <Grid container sx={{flex: "1 1 500px"}}>
-        <Grid key="find" size={{xs: 12, sm: 6, md: 4, lg: 3, xl: 2}} sx={{padding: "20px"}}>
+        <Grid item xs={12} sm={4} md={3} lg={2} sx={{padding: "20px"}}>
           <FilterCard />
         </Grid>
-        <MovieList movies={movies}></MovieList>
+        <Grid item xs={12} sm={8} md={9} lg={10}>
+          <MovieList movies={movies}></MovieList>
+        </Grid>
       </Grid>
     </Grid>
   );
