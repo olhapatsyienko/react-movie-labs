@@ -6,6 +6,23 @@ import FilterCard from "../components/filterMoviesCard";
 
 const HomePage = (props) => {
   const [movies, setMovies] = useState([]);
+  const [nameFilter, setNameFilter] = useState("");
+  const [genreFilter, setGenreFilter] = useState("0");
+
+  const genreId = Number(genreFilter);
+
+  let displayedMovies = movies
+    .filter((m) => {
+      return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
+    })
+    .filter((m) => {
+      return genreId > 0 ? m.genre_ids.includes(genreId) : true;
+    });
+
+  const handleChange = (type, value) => {
+    if (type === "name") setNameFilter(value);
+    else setGenreFilter(value);
+  };
 
   useEffect(() => {
     fetch(
@@ -28,10 +45,14 @@ const HomePage = (props) => {
       </Grid>
       <Grid container sx={{flex: "1 1 500px"}}>
         <Grid item xs={12} sm={4} md={3} lg={2} sx={{padding: "20px"}}>
-          <FilterCard />
+          <FilterCard
+            onUserInput={handleChange}
+            titleFilter={nameFilter}
+            genreFilter={genreFilter}
+          />
         </Grid>
         <Grid item xs={12} sm={8} md={9} lg={10}>
-          <MovieList movies={movies}></MovieList>
+          <MovieList movies={displayedMovies}></MovieList>
         </Grid>
       </Grid>
     </Grid>
