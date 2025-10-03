@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";  
-import MovieList from "../components/movieList";
+import MovieList from "../components";
 import Grid from "@mui/material/Grid";
 import Header from '../components/headerMovieList';
 import FilterCard from "../components/filterMoviesCard";
@@ -40,21 +40,20 @@ const HomePage = (props) => {
 
   return (
     <Grid container>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <Header title={"Home Page"} />
       </Grid>
       <Grid container sx={{flex: "1 1 500px"}}>
-        <Grid item xs={12} sm={4} md={3} lg={2} sx={{padding: "20px"}}>
-          <FilterCard
-            onUserInput={handleChange}
-            titleFilter={nameFilter}
-            genreFilter={genreFilter}
-          />
+        <Grid key="find" size={{xs: 12, sm: 6, md: 4, lg: 3, xl: 2}} sx={{padding: "20px"}}>
+        <FilterCard
+      onUserInput={handleChange}
+      titleFilter={nameFilter}
+      genreFilter={genreFilter}
+    />
+
         </Grid>
-        <Grid item xs={12} sm={8} md={9} lg={10}>
-          <MovieList movies={displayedMovies}></MovieList>
+        <MovieList movies={displayedMovies} />
         </Grid>
-      </Grid>
     </Grid>
   );
 };
