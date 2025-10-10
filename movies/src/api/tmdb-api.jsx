@@ -1,10 +1,19 @@
 export const getMovies = () => {
-    return fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&page=1`
-    )
-      .then(res => res.json())
-      .then(json => json.results);
-  };
+  return fetch(
+    `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
+  ).then((response) => {
+    if (!response.ok) {
+      return response.json().then((error) => {
+        throw new Error(error.status_message || "Something went wrong");
+      });
+    }
+    return response.json();
+  })
+  .catch((error) => {
+      throw error
+  });
+};
+
   
   export const getMovie = id => {
     return fetch(
@@ -13,14 +22,31 @@ export const getMovies = () => {
   };
   
   export const getGenres = () => {
+    console.log('getGenres called, API key:', import.meta.env.VITE_TMDB_KEY ? 'present' : 'missing');
     return fetch(
       "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
         import.meta.env.VITE_TMDB_KEY +
         "&language=en-US"
-    )
-      .then(res => res.json())
-      .then(json => json.genres);
+    ).then( (response) => {
+      console.log('getGenres response status:', response.status);
+      if (!response.ok) {
+        return response.json().then((error) => {
+          console.error('getGenres API error:', error);
+          throw new Error(error.status_message || "Something went wrong");
+        });
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log('getGenres success, data:', data);
+      return data;
+    })
+    .catch((error) => {
+      console.error('getGenres catch error:', error);
+      throw error
+   });
   };
+
   
   export const getMovieImages = (id) => {
     return fetch(
