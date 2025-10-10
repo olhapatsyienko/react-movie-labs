@@ -15,21 +15,27 @@ export const getMovies = () => {
 };
 
   
-export const getMovie = (args) => {
-  console.log(args)
-  const [, idPart] = args.queryKey;
-  const { id } = idPart;
+export const getMovie = (id) => {
+  console.log('getMovie called with id:', id, 'type:', typeof id);
+  
   return fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`
   ).then((response) => {
+    console.log('getMovie response status for id', id, ':', response.status);
     if (!response.ok) {
       return response.json().then((error) => {
+        console.error('getMovie API error for id', id, ':', error);
         throw new Error(error.status_message || "Something went wrong");
       });
     }
     return response.json();
   })
+  .then((data) => {
+    console.log('getMovie success for id', id, ':', data.title);
+    return data;
+  })
   .catch((error) => {
+    console.error('getMovie catch error for id', id, ':', error);
     throw error
  });
 };

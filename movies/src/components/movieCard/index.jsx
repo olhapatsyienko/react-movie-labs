@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext  } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -14,14 +14,20 @@ import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png'
 import { Link } from "react-router";
 import Avatar from '@mui/material/Avatar';
-import React, { useContext  } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
 
 
 
-export default function MovieCard({ movie }) { 
+export default function MovieCard({ movie, action }) {
 
-  const { favorites, addToFavorites } = useContext(MoviesContext);
+  const context = useContext(MoviesContext);
+  
+  // Add safety check for context
+  if (!context) {
+    return <div>Loading...</div>;
+  }
+  
+  const { favorites, addToFavorites } = context;
 
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
@@ -77,16 +83,24 @@ export default function MovieCard({ movie }) {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-      <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
-        <FavoriteIcon color="primary" fontSize="large" />
-       </IconButton>
+      
+      {action && typeof action === 'function' ? (
+        <>
+          {console.log('MovieCard calling action for:', movie.title, 'action type:', typeof action)}
+          {action(movie)}
+        </>
+      ) : (
+        console.log('MovieCard action is not a function:', typeof action, action)
+      )}
+    
+      <Link to={`/movies/${movie.id}`}>
+        <Button variant="outlined" size="medium" color="primary">
+          More Info ...
+        </Button>
+      </Link>
+      
+    </CardActions>
 
-        <Link to={`/movies/${movie.id}`}>
-          <Button variant="outlined" size="medium" color="primary">
-            More Info ...
-          </Button>
-        </Link>
-      </CardActions>
     </Card>
   );
 }
