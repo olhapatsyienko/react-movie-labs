@@ -3,7 +3,7 @@ import { getUpcomingMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner';
-import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
+import AddToWatchListIcon from '../components/cardIcons/addToWatchList'
 
 const UpcomingMoviesPage = (props) => {
 
@@ -22,7 +22,6 @@ const UpcomingMoviesPage = (props) => {
   
   const movies = data.results;
 
-  // Redundant, but necessary to avoid app crashing.
   const favorites = movies.filter(m => m.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
   const addToFavorites = (movieId) => true 
@@ -33,7 +32,7 @@ const UpcomingMoviesPage = (props) => {
       movies={movies}
       action={(movie) => {
         console.log('UpcomingMoviesPage action called for movie:', movie.title);
-        return <AddToFavoritesIcon movie={movie} />
+        return <AddToWatchListIcon movie={movie} />
       }}
     />
   );
