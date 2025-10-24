@@ -7,6 +7,20 @@ import FavoriteMoviesPage from "./pages/favouriteMoviesPage";
 import MovieReviewPage from "./pages/movieReviewPage";
 import TopRatedMoviesPage from "./pages/topRatedMoviesPage";
 import SiteHeader from './components/siteHeader'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import MoviesContextProvider from "./contexts/moviesContext";
+import AddMovieReviewPage from './pages/addMovieReviewPage'
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 360000,
+      refetchInterval: 360000, 
+      refetchOnWindowFocus: false
+    },
+  },
+});
 
 
 const App = () => {
@@ -25,6 +39,7 @@ const App = () => {
 
   );
 };
+
 
 const rootElement = createRoot( document.getElementById("root") )
 rootElement.render(<App />);
