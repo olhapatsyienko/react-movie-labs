@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
+import SavingsIcon from "@mui/icons-material/Savings";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
@@ -51,8 +52,12 @@ const MovieDetails = ({ movie }) => {
       <Paper component="ul" sx={{...root}}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
         <Chip
+          icon={<SavingsIcon />}
+          label={`Budget: ${Math.round(movie.budget / 1000000)}m`}
+        />
+        <Chip
           icon={<MonetizationIcon />}
-          label={`${movie.revenue.toLocaleString()}`}
+          label={`Revenue: ${movie.revenue.toLocaleString()}`}
         />
         <Chip
           icon={<StarRate />}
