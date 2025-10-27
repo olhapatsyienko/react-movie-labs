@@ -10,9 +10,14 @@ import Spinner from '../spinner'
 
 const TemplateMoviePage = ({ movie, children }) => {
   const { data, error, isPending, isError } = useQuery({
-    queryKey: ['images', { id: movie.id }],
-    queryFn: getMovieImages,
+    queryKey: ['images', { id: movie?.id }],
+    queryFn: () => getMovieImages(movie.id),
+    enabled: !!movie?.id,
   });
+
+  if (!movie) {
+    return <Spinner />;
+  }
 
   if (isPending) {
     return <Spinner />;
@@ -22,7 +27,11 @@ const TemplateMoviePage = ({ movie, children }) => {
     return <h1>{error.message}</h1>;
   }
   
-  const images = data.posters 
+  if (!data) {
+    return <Spinner />;
+  }
+  
+  const images = data 
 
 
   return (

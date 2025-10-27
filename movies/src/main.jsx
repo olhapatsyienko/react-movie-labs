@@ -42,4 +42,11 @@ const App = () => {
 
 
 const rootElement = createRoot( document.getElementById("root") )
-rootElement.render(<App />);
+rootElement.render(
+  <QueryClientProvider client={queryClient}>
+    <MoviesContextProvider>
+      <App />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </MoviesContextProvider>
+  </QueryClientProvider>
+);
