@@ -20,7 +20,11 @@ const UpcomingMoviesPage = (props) => {
     return <h1>{error.message}</h1>
   }  
   
-  const movies = data.results;
+  if (!data) {
+    return <Spinner />
+  }
+  
+  const movies = data;
 
   const favorites = movies.filter(m => m.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
