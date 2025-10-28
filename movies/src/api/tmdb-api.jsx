@@ -86,5 +86,13 @@ export const getMovies = () => {
     )
       .then(res => res.json());
   };
+
+  export const getMovieRecommendations = (movieId) => {
+    return fetch(
+      `https://api.themoviedb.org/3/movie/${movieId}/recommendations?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
+    )
+      .then(res => res.json())
+      .then(json => json.results);
+  };
   
   
