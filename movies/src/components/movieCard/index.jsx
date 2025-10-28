@@ -42,8 +42,13 @@ export default function MovieCard({ movie, action }) {
 
 
   return (
-    <Card>
-            <CardHeader
+    <Card sx={{ 
+      height: '100%', 
+      display: 'flex', 
+      flexDirection: 'column',
+      width: '100%'
+    }}>
+      <CardHeader
         avatar={
           movie.favorite ? (
             <Avatar sx={{ backgroundColor: 'red' }}>
@@ -52,21 +57,39 @@ export default function MovieCard({ movie, action }) {
           ) : null
         }
         title={
-          <Typography variant="h5" component="p">
-            {movie.title}{" "}
+          <Typography 
+            variant="h5" 
+            component="p"
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              lineHeight: 1.2,
+              height: '2.4em'
+            }}
+          >
+            {movie.title}
           </Typography>
         }
+        sx={{ 
+          height: '80px',
+          '& .MuiCardHeader-content': {
+            overflow: 'hidden'
+          }
+        }}
       />
 
       <CardMedia
-        sx={{ height: 500 }}
+        sx={{ height: 350, flexShrink: 0 }}
         image={
           movie.poster_path
             ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
             : img
         }
       />
-      <CardContent>
+      <CardContent sx={{ flexGrow: 1 }}>
         <Grid container>
           <Grid size={{xs: 6}}>
             <Typography variant="h6" component="p">
@@ -82,7 +105,7 @@ export default function MovieCard({ movie, action }) {
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions disableSpacing sx={{ mt: 'auto' }}>
       
       {action && typeof action === 'function' ? (
         <>
