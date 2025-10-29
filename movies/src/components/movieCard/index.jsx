@@ -22,7 +22,6 @@ export default function MovieCard({ movie, action }) {
 
   const context = useContext(MoviesContext);
   
-  // Add safety check for context
   if (!context) {
     return <div>Loading...</div>;
   }

@@ -101,5 +101,19 @@ export const getMovies = () => {
     )
       .then(res => res.json());
   };
+
+  export const getPerson = (personId) => {
+    return fetch(
+      `https://api.themoviedb.org/3/person/${personId}?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
+    )
+      .then(res => res.json());
+  };
+
+  export const getPersonMovieCredits = (personId) => {
+    return fetch(
+      `https://api.themoviedb.org/3/person/${personId}/movie_credits?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
+    )
+      .then(res => res.json());
+  };
   
   

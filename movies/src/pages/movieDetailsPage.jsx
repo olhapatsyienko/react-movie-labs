@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from 'react-router';
+import { useParams, Link } from 'react-router';
 import MovieDetails from "../components/movieDetails/";
 import PageTemplate from "../components/templateMoviePage";
 import { getMovie, getMovieRecommendations, getMovieCredits } from '../api/tmdb-api'
@@ -67,24 +67,36 @@ const MoviePage = (props) => {
                   <Grid container spacing={2}>
                     {credits.cast.slice(0, 12).map((person) => (
                       <Grid key={person.id} size={{xs: 6, sm: 4, md: 3, lg: 2}}>
-                        <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                          <CardMedia
-                            sx={{ height: 200, flexShrink: 0 }}
-                            image={
-                              person.profile_path
-                                ? `https://image.tmdb.org/t/p/w300/${person.profile_path}`
-                                : '/api/placeholder/300/450'
+                        <Link to={`/person/${person.id}`} style={{ textDecoration: 'none' }}>
+                          <Card sx={{ 
+                            height: '100%', 
+                            display: 'flex', 
+                            flexDirection: 'column',
+                            cursor: 'pointer',
+                            '&:hover': {
+                              transform: 'scale(1.05)',
+                              transition: 'transform 0.2s ease-in-out',
+                              boxShadow: 4
                             }
-                          />
-                          <CardContent sx={{ flexGrow: 1, padding: '8px' }}>
-                            <Typography variant="subtitle2" component="p" sx={{ fontWeight: 'bold', fontSize: '0.8rem' }}>
-                              {person.name}
-                            </Typography>
-                            <Typography variant="caption" component="p" sx={{ color: 'text.secondary', fontSize: '0.7rem' }}>
-                              {person.character}
-                            </Typography>
-                          </CardContent>
-                        </Card>
+                          }}>
+                            <CardMedia
+                              sx={{ height: 200, flexShrink: 0 }}
+                              image={
+                                person.profile_path
+                                  ? `https://image.tmdb.org/t/p/w300/${person.profile_path}`
+                                  : '/api/placeholder/300/450'
+                              }
+                            />
+                            <CardContent sx={{ flexGrow: 1, padding: '8px' }}>
+                              <Typography variant="subtitle2" component="p" sx={{ fontWeight: 'bold', fontSize: '0.8rem' }}>
+                                {person.name}
+                              </Typography>
+                              <Typography variant="caption" component="p" sx={{ color: 'text.secondary', fontSize: '0.7rem' }}>
+                                {person.character}
+                              </Typography>
+                            </CardContent>
+                          </Card>
+                        </Link>
                       </Grid>
                     ))}
                   </Grid>
@@ -99,24 +111,36 @@ const MoviePage = (props) => {
                   <Grid container spacing={2}>
                     {credits.crew.filter(person => ['Director', 'Writer', 'Producer'].includes(person.job)).slice(0, 12).map((person) => (
                       <Grid key={person.id} size={{xs: 6, sm: 4, md: 3, lg: 2}}>
-                        <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                          <CardMedia
-                            sx={{ height: 200, flexShrink: 0 }}
-                            image={
-                              person.profile_path
-                                ? `https://image.tmdb.org/t/p/w300/${person.profile_path}`
-                                : '/api/placeholder/300/450'
+                        <Link to={`/person/${person.id}`} style={{ textDecoration: 'none' }}>
+                          <Card sx={{ 
+                            height: '100%', 
+                            display: 'flex', 
+                            flexDirection: 'column',
+                            cursor: 'pointer',
+                            '&:hover': {
+                              transform: 'scale(1.05)',
+                              transition: 'transform 0.2s ease-in-out',
+                              boxShadow: 4
                             }
-                          />
-                          <CardContent sx={{ flexGrow: 1, padding: '8px' }}>
-                            <Typography variant="subtitle2" component="p" sx={{ fontWeight: 'bold', fontSize: '0.8rem' }}>
-                              {person.name}
-                            </Typography>
-                            <Typography variant="caption" component="p" sx={{ color: 'text.secondary', fontSize: '0.7rem' }}>
-                              {person.job}
-                            </Typography>
-                          </CardContent>
-                        </Card>
+                          }}>
+                            <CardMedia
+                              sx={{ height: 200, flexShrink: 0 }}
+                              image={
+                                person.profile_path
+                                  ? `https://image.tmdb.org/t/p/w300/${person.profile_path}`
+                                  : '/api/placeholder/300/450'
+                              }
+                            />
+                            <CardContent sx={{ flexGrow: 1, padding: '8px' }}>
+                              <Typography variant="subtitle2" component="p" sx={{ fontWeight: 'bold', fontSize: '0.8rem' }}>
+                                {person.name}
+                              </Typography>
+                              <Typography variant="caption" component="p" sx={{ color: 'text.secondary', fontSize: '0.7rem' }}>
+                                {person.job}
+                              </Typography>
+                            </CardContent>
+                          </Card>
+                        </Link>
                       </Grid>
                     ))}
                   </Grid>
