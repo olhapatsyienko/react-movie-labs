@@ -64,11 +64,23 @@ export default function FilterMoviesCard(props) {
     handleChange(e, "year", e.target.value);
   };
 
+  const handleRatingChange = (e) => {
+    handleChange(e, "rating", e.target.value);
+  };
+
   const currentYear = new Date().getFullYear();
   const years = [];
   for (let year = currentYear; year >= 1900; year--) {
     years.push(year.toString());
   }
+  const ratingOptions = [
+    { value: "", label: "All ratings" },
+    { value: "8", label: "8.0 and above" },
+    { value: "7", label: "7.0 and above" },
+    { value: "6", label: "6.0 and above" },
+    { value: "5", label: "5.0 and above" },
+    { value: "0", label: "Below 5.0" },
+  ];
 
 
   return (
@@ -127,6 +139,25 @@ export default function FilterMoviesCard(props) {
               return (
                 <MenuItem key={year} value={year}>
                   {year}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{...formControl}}>
+          <InputLabel id="rating-label">Rating</InputLabel>
+          <Select
+             labelId="rating-label"
+             id="rating-select"
+             defaultValue=""
+             value={props.ratingFilter || ""}
+             onChange={handleRatingChange}
+            >
+            {ratingOptions.map((option) => {
+              return (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
                 </MenuItem>
               );
             })}
