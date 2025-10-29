@@ -1,7 +1,6 @@
 import React, {useState, useEffect}  from "react";
 
 import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import InputLabel from "@mui/material/InputLabel";
@@ -10,7 +9,6 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg'
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../spinner';
@@ -62,6 +60,16 @@ export default function FilterMoviesCard(props) {
     handleChange(e, "genre", e.target.value);
   };
 
+  const handleYearChange = (e) => {
+    handleChange(e, "year", e.target.value);
+  };
+
+  const currentYear = new Date().getFullYear();
+  const years = [];
+  for (let year = currentYear; year >= 1900; year--) {
+    years.push(year.toString());
+  }
+
 
   return (
     <Card 
@@ -104,14 +112,26 @@ export default function FilterMoviesCard(props) {
             })}
           </Select>
         </FormControl>
-      </CardContent>
-      <CardMedia
-        sx={{ height: 300 }}
-        image={img}
-        title="Filter"
-      />
-      <CardContent>
-        <br />
+
+        <FormControl sx={{...formControl}}>
+          <InputLabel id="year-label">Year</InputLabel>
+          <Select
+             labelId="year-label"
+             id="year-select"
+             defaultValue=""
+             value={props.yearFilter || ""}
+             onChange={handleYearChange}
+            >
+            <MenuItem value="">All years</MenuItem>
+            {years.map((year) => {
+              return (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
       </CardContent>
     </Card>
   );
