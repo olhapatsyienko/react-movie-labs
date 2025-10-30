@@ -12,7 +12,11 @@ const AddToFavoritesIcon = ({ movie }) => {
 
   const handleAddToFavorites = (e) => {
     e.preventDefault();
-    context.addToFavorites(movie);
+    if (isFavorite) {
+      context.removeFromFavorites(movie);
+    } else {
+      context.addToFavorites(movie);
+    }
   };
 
   return (

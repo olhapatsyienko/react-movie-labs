@@ -49,13 +49,6 @@ export default function MovieCard({ movie, action }) {
       width: '100%'
     }}>
       <CardHeader
-        avatar={
-          movie.favorite ? (
-            <Avatar sx={{ backgroundColor: 'red' }}>
-              <FavoriteIcon />
-            </Avatar>
-          ) : null
-        }
         title={
           <Typography 
             variant="h5" 
@@ -115,8 +108,6 @@ export default function MovieCard({ movie, action }) {
       ) : (
         console.log('MovieCard action is not a function:', typeof action, action)
       )}
-    
-      <AddToPlaylist movie={movie} />
     
       <Link to={`/movies/${movie.id}`}>
         <Button variant="outlined" size="medium" color="primary">

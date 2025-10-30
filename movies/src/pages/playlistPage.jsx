@@ -5,6 +5,7 @@ import { useQueries } from "@tanstack/react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from '../components/spinner' ;
 import AddToPlaylist from "../components/cardIcons/addToPlaylist";
+import AddToFavoritesIcon from "../components/cardIcons/addToFavorites";
 
 const PlaylistPage = () => {
   const { playlist: movieIds } = useContext(MoviesContext);
@@ -32,7 +33,12 @@ const PlaylistPage = () => {
     <PageTemplate
       title="My Playlist"
       movies={movies}
-      action={(movie) => <AddToPlaylist movie={movie} />}
+      action={(movie) => (
+        <>
+          <AddToFavoritesIcon movie={movie} />
+          <AddToPlaylist movie={movie} />
+        </>
+      )}
     />
   );
 };

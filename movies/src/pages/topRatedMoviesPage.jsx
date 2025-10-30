@@ -4,6 +4,7 @@ import { getTopRatedMovies } from "../api/tmdb-api";
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
+import AddToPlaylist from '../components/cardIcons/addToPlaylist'
 
 const TopRatedMoviesPage = (props) => {
   const { data, error, isPending, isError  } = useQuery({
@@ -32,7 +33,12 @@ const TopRatedMoviesPage = (props) => {
       title='Top Rated Movies'
       movies={movies}
       action={(movie) => {
-        return <AddToFavoritesIcon movie={movie} />
+        return (
+          <>
+            <AddToFavoritesIcon movie={movie} />
+            <AddToPlaylist movie={movie} />
+          </>
+        )
       }}
     />
   );

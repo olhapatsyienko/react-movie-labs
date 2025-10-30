@@ -4,6 +4,7 @@ import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
+import AddToPlaylist from '../components/cardIcons/addToPlaylist'
 
 const NowPlayingMoviesPage = (props) => {
 
@@ -36,7 +37,12 @@ const NowPlayingMoviesPage = (props) => {
       movies={movies}
       action={(movie) => {
         console.log('NowPlayingMoviesPage action called for movie:', movie.title);
-        return <AddToFavoritesIcon movie={movie} />
+        return (
+          <>
+            <AddToFavoritesIcon movie={movie} />
+            <AddToPlaylist movie={movie} />
+          </>
+        )
       }}
     />
   );
