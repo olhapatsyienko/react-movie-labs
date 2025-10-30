@@ -9,9 +9,11 @@ function MovieListPageTemplate({ movies, title, action }) {
   console.log('MovieListPageTemplate received action:', typeof action, action);
 
   const [nameFilter, setNameFilter] = useState("");
-  const [genreFilter, setGenreFilter] = useState("0");
+  const [genreFilter, setGenreFilter] = useState("");
   const [yearFilter, setYearFilter] = useState("");
   const [ratingFilter, setRatingFilter] = useState("");
+  const [sortBy, setSortBy] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
   const genreId = Number(genreFilter);
 
   let displayedMovies = movies
@@ -38,11 +40,48 @@ function MovieListPageTemplate({ movies, title, action }) {
       }
     });
 
+  // Sorting logic
+  const compareFn = (a, b) => {
+    const direction = sortOrder === 'asc' ? 1 : -1;
+    switch (sortBy) {
+      case 'title': {
+        const aTitle = a.title || '';
+        const bTitle = b.title || '';
+        return aTitle.localeCompare(bTitle) * direction;
+      }
+      case 'release_date': {
+        const aDate = a.release_date || '';
+        const bDate = b.release_date || '';
+        return (aDate > bDate ? 1 : aDate < bDate ? -1 : 0) * direction;
+      }
+      case 'vote_average': {
+        const av = Number(a.vote_average) || 0;
+        const bv = Number(b.vote_average) || 0;
+        return (av - bv) * direction;
+      }
+      case 'vote_count': {
+        const av = Number(a.vote_count) || 0;
+        const bv = Number(b.vote_count) || 0;
+        return (av - bv) * direction;
+      }
+      case 'popularity':
+      default: {
+        const av = Number(a.popularity) || 0;
+        const bv = Number(b.popularity) || 0;
+        return (av - bv) * direction;
+      }
+    }
+  };
+
+  displayedMovies = [...displayedMovies].sort(compareFn);
+
   const handleChange = (type, value) => {
     if (type === "name") setNameFilter(value);
     else if (type === "genre") setGenreFilter(value);
     else if (type === "year") setYearFilter(value);
     else if (type === "rating") setRatingFilter(value);
+    else if (type === "sortBy") setSortBy(value);
+    else if (type === "sortOrder") setSortOrder(value);
   };
 
   return (
@@ -68,6 +107,8 @@ function MovieListPageTemplate({ movies, title, action }) {
             genreFilter={genreFilter}
             yearFilter={yearFilter}
             ratingFilter={ratingFilter}
+            sortBy={sortBy}
+            sortOrder={sortOrder}
           />
         </Grid>
         <Grid 

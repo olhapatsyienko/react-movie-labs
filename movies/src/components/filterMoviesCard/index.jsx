@@ -42,10 +42,7 @@ export default function FilterMoviesCard(props) {
     return <Spinner />;
   }
   
-  const genres = [...data]; 
-  if (genres[0].name !== "All"){
-    genres.unshift({ id: "0", name: "All" });
-  }
+  const genres = [...data];
 
   const handleChange = (e, type, value) => {
     e.preventDefault();
@@ -68,6 +65,14 @@ export default function FilterMoviesCard(props) {
     handleChange(e, "rating", e.target.value);
   };
 
+  const handleSortByChange = (e) => {
+    handleChange(e, "sortBy", e.target.value);
+  };
+
+  const handleSortOrderChange = (e) => {
+    handleChange(e, "sortOrder", e.target.value);
+  };
+
   const currentYear = new Date().getFullYear();
   const years = [];
   for (let year = currentYear; year >= 1900; year--) {
@@ -80,6 +85,18 @@ export default function FilterMoviesCard(props) {
     { value: "6", label: "6.0 and above" },
     { value: "5", label: "5.0 and above" },
     { value: "0", label: "Below 5.0" },
+  ];
+
+  const sortByOptions = [
+    { value: 'popularity', label: 'Popularity' },
+    { value: 'vote_average', label: 'Rating' },
+    { value: 'vote_count', label: 'Vote count' },
+    { value: 'release_date', label: 'Release date' },
+    { value: 'title', label: 'Title' },
+  ];
+  const sortOrderOptions = [
+    { value: 'desc', label: 'Descending' },
+    { value: 'asc', label: 'Ascending' },
   ];
 
 
@@ -106,15 +123,14 @@ export default function FilterMoviesCard(props) {
         />
 
         <FormControl sx={{...formControl}}>
-          <InputLabel id="genre-label">Genre</InputLabel>
           <Select
-             labelId="genre-label"
              id="genre-select"
-             defaultValue="0"
-             value={props.genreFilter}
+             defaultValue=""
+             value={props.genreFilter || ""}
              onChange={handleGenreChange}
+             displayEmpty
             >
-
+            <MenuItem value="">All genres</MenuItem>
             {genres.map((genre) => {
               return (
                 <MenuItem key={genre.id} value={genre.id}>
@@ -126,13 +142,12 @@ export default function FilterMoviesCard(props) {
         </FormControl>
 
         <FormControl sx={{...formControl}}>
-          <InputLabel id="year-label">Year</InputLabel>
           <Select
-             labelId="year-label"
              id="year-select"
              defaultValue=""
              value={props.yearFilter || ""}
              onChange={handleYearChange}
+             displayEmpty
             >
             <MenuItem value="">All years</MenuItem>
             {years.map((year) => {
@@ -146,13 +161,12 @@ export default function FilterMoviesCard(props) {
         </FormControl>
 
         <FormControl sx={{...formControl}}>
-          <InputLabel id="rating-label">Rating</InputLabel>
           <Select
-             labelId="rating-label"
              id="rating-select"
              defaultValue=""
              value={props.ratingFilter || ""}
              onChange={handleRatingChange}
+             displayEmpty
             >
             {ratingOptions.map((option) => {
               return (
@@ -161,6 +175,40 @@ export default function FilterMoviesCard(props) {
                 </MenuItem>
               );
             })}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{...formControl}}>
+          <Select
+             id="sortby-select"
+             defaultValue=""
+             value={props.sortBy || ''}
+             onChange={handleSortByChange}
+             displayEmpty
+            >
+            <MenuItem value="">Sort by</MenuItem>
+            {sortByOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{...formControl}}>
+          <Select
+             id="sortorder-select"
+             defaultValue=""
+             value={props.sortOrder || ''}
+             onChange={handleSortOrderChange}
+             displayEmpty
+            >
+            <MenuItem value="">Order</MenuItem>
+            {sortOrderOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </CardContent>
