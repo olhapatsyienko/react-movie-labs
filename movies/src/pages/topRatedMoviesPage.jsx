@@ -28,5 +28,5 @@ const TopRatedMoviesPage = (props) => {
     />
   );
 };
-
 export default TopRatedMoviesPage;
+

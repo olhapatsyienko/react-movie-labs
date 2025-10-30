@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner'
 import MovieList from '../components/movieList';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
+import AddToPlaylist from '../components/cardIcons/addToPlaylist';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -157,7 +158,12 @@ const MoviePage = (props) => {
               <MovieList 
                 action={(movie) => {
                   console.log('MovieDetailsPage recommendations action called for movie:', movie.title);
-                  return <AddToFavoritesIcon movie={movie} />
+                  return (
+                    <>
+                      <AddToFavoritesIcon movie={movie} />
+                      <AddToPlaylist movie={movie} />
+                    </>
+                  )
                 }} 
                 movies={recommendations} 
               />

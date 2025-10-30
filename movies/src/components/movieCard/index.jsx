@@ -15,6 +15,7 @@ import img from '../../images/film-poster-placeholder.png'
 import { Link } from "react-router";
 import Avatar from '@mui/material/Avatar';
 import { MoviesContext } from "../../contexts/moviesContext";
+import AddToPlaylist from "../cardIcons/addToPlaylist";
 
 
 
@@ -114,6 +115,8 @@ export default function MovieCard({ movie, action }) {
       ) : (
         console.log('MovieCard action is not a function:', typeof action, action)
       )}
+    
+      <AddToPlaylist movie={movie} />
     
       <Link to={`/movies/${movie.id}`}>
         <Button variant="outlined" size="medium" color="primary">
