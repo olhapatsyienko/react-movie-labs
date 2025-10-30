@@ -3,8 +3,11 @@ import Header from "../headerMovieList";
 import FilterCard from "../filterMoviesCard";
 import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Pagination from "@mui/material/Pagination";
+import CircularProgress from "@mui/material/CircularProgress";
 
-function MovieListPageTemplate({ movies, title, action }) {
+function MovieListPageTemplate({ movies, title, action, page, totalPages, onPageChange, isLoadingMore }) {
 
   console.log('MovieListPageTemplate received action:', typeof action, action);
 
@@ -116,6 +119,36 @@ function MovieListPageTemplate({ movies, title, action }) {
           sx={{padding: "20px"}}
         >
           <MovieList action={action} movies={displayedMovies}></MovieList>
+          {onPageChange && totalPages > 1 && (
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, position: 'relative' }}>
+              <Pagination
+                count={totalPages}
+                page={page}
+                onChange={onPageChange}
+                color="primary"
+                size="large"
+                siblingCount={1}
+                boundaryCount={1}
+                sx={{
+                  backgroundColor: 'rgba(255,255,255,0.06)',
+                  padding: '8px 16px',
+                  borderRadius: '999px',
+                  boxShadow: '0 12px 24px rgba(124,77,255,0.25)',
+                  '& .MuiPaginationItem-root': {
+                    color: '#e0d7ff',
+                    fontWeight: 600,
+                  },
+                  '& .Mui-selected': {
+                    backgroundColor: 'rgba(124,77,255,0.25)',
+                    color: '#fff',
+                  }
+                }}
+              />
+              {isLoadingMore && (
+                <CircularProgress size={28} sx={{ position: 'absolute', right: { xs: 'calc(50% - 14px)', sm: -48 }, top: '50%', transform: 'translateY(-50%)', color: '#b39ddb' }} />
+              )}
+            </Box>
+          )}
         </Grid>
       </Grid>
     </Grid>

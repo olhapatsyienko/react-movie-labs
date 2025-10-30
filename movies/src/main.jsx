@@ -33,6 +33,20 @@ const queryClient = new QueryClient({
 });
 
 
+const darkNeonTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: { main: '#7c4dff' },
+    secondary: { main: '#8e24aa' },
+    background: { default: '#0b0614', paper: '#0f0a18' }
+  },
+  shape: { borderRadius: 12 },
+  typography: {
+    fontFamily: 'Inter, system-ui, Roboto, Helvetica, Arial, sans-serif',
+    h4: { fontWeight: 700 }
+  }
+});
+
 const App = () => {
   return (
     <ThemeProvider theme={darkNeonTheme}>
@@ -93,18 +107,3 @@ rootElement.render(
     </MoviesContextProvider>
   </QueryClientProvider>
 );
-
-// Dark neon theme
-const darkNeonTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: { main: '#7c4dff' },
-    secondary: { main: '#8e24aa' },
-    background: { default: '#0b0614', paper: '#0f0a18' }
-  },
-  shape: { borderRadius: 12 },
-  typography: {
-    fontFamily: 'Inter, system-ui, Roboto, Helvetica, Arial, sans-serif',
-    h4: { fontWeight: 700 }
-  }
-});

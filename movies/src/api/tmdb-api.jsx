@@ -1,10 +1,35 @@
+const API_KEY = import.meta.env.VITE_TMDB_KEY;
+const BASE_URL = 'https://api.themoviedb.org/3';
+
+const fetchJson = (path, params = {}) => {
+  const url = new URL(`${BASE_URL}${path}`);
+  url.searchParams.set('api_key', API_KEY);
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      url.searchParams.set(key, value);
+    }
+  });
+
+  return fetch(url.toString()).then((res) => {
+    if (!res.ok) {
+      throw new Error(`TMDB request failed: ${res.status}`);
+    }
+    return res.json();
+  });
+};
+
+export const getDiscoverMoviesPage = (page = 1, extraParams = {}) => {
+  return fetchJson('/discover/movie', {
+    language: 'en-US',
+    include_adult: 'false',
+    page: String(page),
+    ...extraParams,
+  });
+};
+
 export const getMovies = () => {
-    return fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&page=1`
-    )
-      .then(res => res.json())
-      .then(json => json.results);
-  };
+  return getDiscoverMoviesPage().then((json) => json.results);
+};
   
   export const getMovie = id => {
     return fetch(
@@ -40,44 +65,59 @@ export const getMovies = () => {
       });
   };
 
-  export const getTopRatedMovies = () => {
-    return fetch(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
-    )
-      .then(res => res.json())
-      .then(json => json.results);
+export const getTopRatedMovies = () => {
+    return getTopRatedMoviesPage().then(json => json.results);
   };
 
-  export const getUpcomingMovies = () => {
-    return fetch(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
-    )
-      .then(res => res.json())
-      .then(json => json.results);
+  export const getTopRatedMoviesPage = (page = 1) => {
+    return fetchJson('/movie/top_rated', {
+      language: 'en-US',
+      page: String(page),
+    });
   };
 
-  export const getNowPlayingMovies = () => {
-    return fetch(
-      `https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
-    )
-      .then(res => res.json())
-      .then(json => json.results);
+export const getUpcomingMovies = () => {
+    return getUpcomingMoviesPage().then(json => json.results);
   };
 
-  export const getPopularMovies = () => {
-    return fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
-    )
-      .then(res => res.json())
-      .then(json => json.results);
+  export const getUpcomingMoviesPage = (page = 1) => {
+    return fetchJson('/movie/upcoming', {
+      language: 'en-US',
+      page: String(page),
+    });
   };
 
-  export const getTrendingMovies = () => {
-    return fetch(
-      `https://api.themoviedb.org/3/trending/movie/week?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
-    )
-      .then(res => res.json())
-      .then(json => json.results);
+export const getNowPlayingMovies = () => {
+    return getNowPlayingMoviesPage().then(json => json.results);
+  };
+
+  export const getNowPlayingMoviesPage = (page = 1) => {
+    return fetchJson('/movie/now_playing', {
+      language: 'en-US',
+      page: String(page),
+    });
+  };
+
+export const getPopularMovies = () => {
+    return getPopularMoviesPage().then(json => json.results);
+  };
+
+  export const getPopularMoviesPage = (page = 1) => {
+    return fetchJson('/movie/popular', {
+      language: 'en-US',
+      page: String(page),
+    });
+  };
+
+export const getTrendingMovies = () => {
+    return getTrendingMoviesPage().then(json => json.results);
+  };
+
+  export const getTrendingMoviesPage = (page = 1) => {
+    return fetchJson('/trending/movie/week', {
+      language: 'en-US',
+      page: String(page),
+    });
   };
 
   export const getLatestMovie = () => {
@@ -87,12 +127,11 @@ export const getMovies = () => {
       .then(res => res.json());
   };
 
-  export const getMovieRecommendations = (movieId) => {
-    return fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/recommendations?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
-    )
-      .then(res => res.json())
-      .then(json => json.results);
+  export const getMovieRecommendations = (movieId, page = 1) => {
+    return fetchJson(`/movie/${movieId}/recommendations`, {
+      language: 'en-US',
+      page: String(page),
+    }).then(json => json.results);
   };
 
   export const getMovieCredits = (movieId) => {

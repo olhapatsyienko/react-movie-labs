@@ -1,5 +1,5 @@
-import React from "react";
-import { getMovies } from "../api/tmdb-api";
+import React, { useState } from "react";
+import { getDiscoverMoviesPage } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner';
@@ -8,9 +8,12 @@ import AddToPlaylist from '../components/cardIcons/addToPlaylist'
 
 const HomePage = (props) => {
 
-  const { data, error, isPending, isError  } = useQuery({
-    queryKey: ['discover'],
-    queryFn: getMovies,
+  const [page, setPage] = useState(1);
+
+  const { data, error, isPending, isError, isFetching  } = useQuery({
+    queryKey: ['discover', page],
+    queryFn: () => getDiscoverMoviesPage(page),
+    keepPreviousData: true,
   })
   
   if (isPending) {
@@ -25,7 +28,8 @@ const HomePage = (props) => {
     return <Spinner />
   }
   
-  const movies = data;
+  const movies = data.results || [];
+  const totalPages = Math.min(data.total_pages || 1, 500);
 
   const favorites = movies.filter(m => m.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
@@ -35,6 +39,10 @@ const HomePage = (props) => {
     <PageTemplate
       title="Discover Movies"
       movies={movies}
+      page={page}
+      totalPages={totalPages}
+      onPageChange={(_, value) => setPage(value)}
+      isLoadingMore={isFetching && !isPending}
       action={(movie) => {
         console.log('HomePage action called for movie:', movie.title);
         return (
