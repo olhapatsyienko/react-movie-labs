@@ -18,7 +18,35 @@ const formControl =
   {
     margin: 1,
     minWidth: "90%",
-    backgroundColor: "rgb(255, 255, 255)"
+    '& .MuiFilledInput-root': {
+      backgroundColor: "rgba(255, 255, 255, 0.08)",
+      borderRadius: 14,
+      border: "1px solid rgba(255,255,255,0.12)",
+      transition: "all .25s ease",
+      '&:hover': {
+        backgroundColor: "rgba(255, 255, 255, 0.12)",
+      },
+      '&:before, &:after': {
+        display: 'none'
+      },
+      '&.Mui-focused': {
+        backgroundColor: "rgba(255,255,255,0.16)",
+        boxShadow: "0 0 0 3px rgba(124, 77, 255, 0.35)",
+        borderColor: "transparent"
+      }
+    },
+    '& .MuiFilledInput-input': {
+      color: '#f3e5ff',
+      textAlign: 'center',
+      padding: '14px 16px',
+      fontWeight: 500
+    },
+    '& .MuiSelect-select': {
+      textAlign: 'center'
+    },
+    '& .MuiSelect-icon': {
+      color: '#d1c4ff'
+    }
   };
 
 export default function FilterMoviesCard(props) {
@@ -103,7 +131,11 @@ export default function FilterMoviesCard(props) {
   return (
     <Card 
       sx={{
-        backgroundColor: "rgb(204, 204, 0)"
+        background: 'linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
+        border: '1px solid rgba(255,255,255,0.12)',
+        boxShadow: '0 14px 34px rgba(124,77,255,0.28)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)'
       }} 
       variant="outlined">
       <CardContent>
@@ -120,14 +152,17 @@ export default function FilterMoviesCard(props) {
           variant="filled"
           value={props.titleFilter}
           onChange={handleTextChange}
+          InputProps={{ disableUnderline: true, sx: { textAlign: 'center' } }}
         />
 
-        <FormControl sx={{...formControl}}>
+        <FormControl sx={{...formControl}} variant="filled">
           <Select
              id="genre-select"
              defaultValue=""
              value={props.genreFilter || ""}
              onChange={handleGenreChange}
+             variant="filled"
+             disableUnderline
              displayEmpty
             >
             <MenuItem value="">All genres</MenuItem>
@@ -141,12 +176,14 @@ export default function FilterMoviesCard(props) {
           </Select>
         </FormControl>
 
-        <FormControl sx={{...formControl}}>
+        <FormControl sx={{...formControl}} variant="filled">
           <Select
              id="year-select"
              defaultValue=""
              value={props.yearFilter || ""}
              onChange={handleYearChange}
+             variant="filled"
+             disableUnderline
              displayEmpty
             >
             <MenuItem value="">All years</MenuItem>
@@ -160,12 +197,14 @@ export default function FilterMoviesCard(props) {
           </Select>
         </FormControl>
 
-        <FormControl sx={{...formControl}}>
+        <FormControl sx={{...formControl}} variant="filled">
           <Select
              id="rating-select"
              defaultValue=""
              value={props.ratingFilter || ""}
              onChange={handleRatingChange}
+             variant="filled"
+             disableUnderline
              displayEmpty
             >
             {ratingOptions.map((option) => {
@@ -178,12 +217,14 @@ export default function FilterMoviesCard(props) {
           </Select>
         </FormControl>
 
-        <FormControl sx={{...formControl}}>
+        <FormControl sx={{...formControl}} variant="filled">
           <Select
              id="sortby-select"
              defaultValue=""
              value={props.sortBy || ''}
              onChange={handleSortByChange}
+             variant="filled"
+             disableUnderline
              displayEmpty
             >
             <MenuItem value="">Sort by</MenuItem>
@@ -195,12 +236,14 @@ export default function FilterMoviesCard(props) {
           </Select>
         </FormControl>
 
-        <FormControl sx={{...formControl}}>
+        <FormControl sx={{...formControl}} variant="filled">
           <Select
              id="sortorder-select"
              defaultValue=""
              value={props.sortOrder || ''}
              onChange={handleSortOrderChange}
+             variant="filled"
+             disableUnderline
              displayEmpty
             >
             <MenuItem value="">Order</MenuItem>
