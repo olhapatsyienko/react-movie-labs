@@ -10,9 +10,9 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
-import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
 import img from '../../images/film-poster-placeholder.png'
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import { MoviesContext } from "../../contexts/moviesContext";
 import AddToPlaylist from "../cardIcons/addToPlaylist";
@@ -83,20 +83,24 @@ export default function MovieCard({ movie, action }) {
         }
       />
       <CardContent sx={{ flexGrow: 1 }}>
-        <Grid container>
-          <Grid size={{xs: 6}}>
-            <Typography variant="h6" component="p">
-              <CalendarIcon fontSize="small" />
-              {movie.release_date}
-            </Typography>
-          </Grid>
-          <Grid size={{xs: 6}}>
-            <Typography variant="h6" component="p">
-              <StarRateIcon fontSize="small" />
-              {"  "} {movie.vote_average}{" "}
-            </Typography>
-          </Grid>
-        </Grid>
+        <Stack spacing={0.5}>
+          <Typography
+            variant="subtitle1"
+            component="p"
+            sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+          >
+            <CalendarIcon fontSize="small" />
+            {movie.release_date || 'Unknown'}
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            component="p"
+            sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+          >
+            <StarRateIcon fontSize="small" />
+            {movie.vote_average ?? 'N/A'}
+          </Typography>
+        </Stack>
       </CardContent>
       <CardActions disableSpacing sx={{ mt: 'auto' }}>
       
