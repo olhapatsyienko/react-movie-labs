@@ -11,8 +11,8 @@ const PopularMoviesPage = (props) => {
   const [page, setPage] = useState(1);
 
   const { data, error, isPending, isError, isFetching  } = useQuery({
-    queryKey: ['popular', page],
-    queryFn: () => getPopularMoviesPage(page),
+    queryKey: ['popular', page, 'CN', 'zh-CN'], 
+    queryFn: () => getPopularMoviesPage(page, 'CN', 'zh-CN'),
     keepPreviousData: true,
   })
   
@@ -37,7 +37,7 @@ const PopularMoviesPage = (props) => {
 
   return (
     <PageTemplate
-      title="Popular Movies"
+      title="Popular Movies in China"
       movies={movies}
       page={page}
       totalPages={totalPages}

@@ -102,11 +102,15 @@ export const getPopularMovies = () => {
     return getPopularMoviesPage().then(json => json.results);
   };
 
-  export const getPopularMoviesPage = (page = 1) => {
-    return fetchJson('/movie/popular', {
-      language: 'en-US',
+  export const getPopularMoviesPage = (page = 1, region = undefined, language = 'en-US') => {
+    const params = {
+      language: language,
       page: String(page),
-    });
+    };
+    if (region) {
+      params.region = region;
+    }
+    return fetchJson('/movie/popular', params);
   };
 
 export const getTrendingMovies = () => {
