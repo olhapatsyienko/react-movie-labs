@@ -78,6 +78,19 @@ const MovieDetails = ({ movie }) => {
           </li>
         ))}
       </Paper>
+      <Paper 
+        component="ul" 
+        sx={{...root}}
+      > 
+        <li>
+          <Chip label="Languages" sx={{...chip}} color="primary" />
+        </li>
+        {movie.spoken_languages?.map((language) => (
+          <li key={language.iso_639_1}>
+            <Chip label={language.name} sx={{...chip}} />
+          </li>
+        ))}
+      </Paper>
       <Fab
         color="secondary"
         variant="extended"
